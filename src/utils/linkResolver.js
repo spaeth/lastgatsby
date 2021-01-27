@@ -4,7 +4,7 @@
 
 const linkResolver = (doc) => {
   if (doc.type === 'post') {
-    return `/${doc.uid}`
+    return `/blog/${doc.uid}`
   }
   return '/'
 }
