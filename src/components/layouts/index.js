@@ -27,7 +27,7 @@ const Layout = ({ data, children }) => {
 
   return (
     <>
-      <Helmet>
+      <Helmet htmlAttributes={{ lang: 'de' }}>
         <meta charSet="utf-8" />
         <title>{title}</title>
         <meta name="description" content={description} />
