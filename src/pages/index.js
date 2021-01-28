@@ -4,6 +4,7 @@ import { RichText } from 'prismic-reactjs'
 import { withPreview } from 'gatsby-source-prismic'
 import Layout from '../components/layouts'
 import BlogPosts from '../components/BlogPosts'
+import Img from 'gatsby-image';
 
 // Query for the Blog Home content in Prismic
 export const query = graphql`
