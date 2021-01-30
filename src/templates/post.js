@@ -9,13 +9,19 @@ import SEO from "../components/SEO";
 
 // Query for the Blog Post content in Prismic
 export const query = graphql`
-  query PostQuery($uid: String) {
-    allPrismicPost(filter: { uid: { eq: $uid } }) {
-      edges {
-        node {
-          uid
-          data {
-            body {
+  query BlogPostQuery($uid: String) {
+    prismicPost(uid: { eq: $uid }) {
+      id
+      uid
+      lang
+      type
+      url
+      data {
+        date
+        title {
+          raw
+        }
+        body {
               ... on PrismicPostBodyText {
                 slice_type
                 primary {
@@ -34,10 +40,7 @@ export const query = graphql`
                   }
                 }
               }
-            }
-          }
-        }
-      }
+      } }   
     }
         prismicNavigation {
       ...HeaderQuery
@@ -48,13 +51,14 @@ export const query = graphql`
 const Post = ({ data }) => {
   if (!data) return null
   //const post = data.prismicPost.data
-    const document = data.allPrismicPost.edges[0].node
+  const document = data.prismicPost.data
+  //const document = data.allPrismicPost.edges[0].node
   //const document = data.allPrismicPage.edges[0].node
   const prismicNavigation = data.prismicNavigation
 
   return (
     <Layout navigation={prismicNavigation}>
-      <SliceZone sliceZone={document.data.body} />
+      <SliceZone sliceZone={document.body} />
     </Layout>
   )
 }

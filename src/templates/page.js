@@ -7,7 +7,8 @@ import { withPreview } from 'gatsby-source-prismic'
 
 const Page = ({ data }) => {
   if (!data) return null
-  const document = data.allPrismicPage.edges[0].node
+  //const document = data.allPrismicPage.edges[0].node
+  const document = data.prismicPage
   const prismicNavigation = data.prismicNavigation
 
   const capitalizeFirstLetter = (input) => {
@@ -24,87 +25,87 @@ const Page = ({ data }) => {
 
 export const query = graphql`
   query PageQuery($uid: String) {
-    allPrismicPage(filter: { uid: { eq: $uid } }) {
-      edges {
-        node {
-          uid
-          data {
-            body {
-              ... on PrismicPageBodyText {
-                slice_type
-                primary {
-                  columns
-                  content {
-                    raw
-                  }
-                }
+    prismicPage(uid: { eq: $uid }) {
+      id
+      uid
+      lang
+      type
+      url
+      data {
+        body {
+          ... on PrismicPageBodyText {
+            slice_type
+            primary {
+              columns
+              content {
+                raw
               }
-              ... on PrismicPageBodyQuote {
-                slice_type
-                primary {
-                  quote {
-                    raw
-                  }
-                }
+            }
+          }
+          ... on PrismicPageBodyQuote {
+            slice_type
+            primary {
+              quote {
+                raw
               }
-              ... on PrismicPageBodyFullWidthImage {
-                slice_type
-                primary {
-                  full_width_image {
-                    url
-                    thumbnails
-                  }
-                }
+            }
+          }
+          ... on PrismicPageBodyFullWidthImage {
+            slice_type
+            primary {
+              full_width_image {
+                url
+                thumbnails
               }
-              ... on PrismicPageBodyImageGallery {
-                slice_type
-                primary {
-                  gallery_title {
-                    raw
-                  }
-                }
-                items {
-                  image {
-                    url
-                    thumbnails
-                    alt
-                  }
-                  image_description {
-                    raw
-                  }
-                  link {
-                    url
-                    type
-                    uid
-                  }
-                  link_label {
-                    raw
-                  }
-                }
+            }
+          }
+          ... on PrismicPageBodyImageGallery {
+            slice_type
+            primary {
+              gallery_title {
+                raw
               }
-              ... on PrismicPageBodyImageHighlight {
-                slice_type
-                primary {
-                  featured_image {
-                    url
-                    thumbnails
-                    alt
-                  }
-                  title {
-                    raw
-                  }
-                  description {
-                    raw
-                  }
-                  link {
-                    url
-                    type
-                    uid
-                  }
-                  link_label {
-                    raw
-                  }
-                }
+            }
+            items {
+              image {
+                url
+                thumbnails
+                alt
+              }
+              image_description {
+                raw
+              }
+              link {
+                url
+                type
+                uid
+              }
+              link_label {
+                raw
+              }
+            }
+          }
+          ... on PrismicPageBodyImageHighlight {
+            slice_type
+            primary {
+              featured_image {
+                url
+                thumbnails
+                alt
+              }
+              title {
+                raw
+              }
+              description {
+                raw
+              }
+              link {
+                url
+                type
+                uid
+              }
+              link_label {
+                raw
               }
             }
           }

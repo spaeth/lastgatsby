@@ -1,15 +1,25 @@
 import * as React from 'react'
 import { withPreviewResolver } from 'gatsby-source-prismic'
 import { graphql, useStaticQuery } from 'gatsby'
+import Layout from '../components/layouts'
 
 import linkResolver from '../utils/linkResolver'
 
-const PreviewPage = ({ isPreview }) => {
+const PreviewPage = ({ isPreview, isLoading }) => {
+  const previewText = isPreview ? 'Loading' : 'Not a preview!'
+  return (
+    <Layout>
+      <p>{previewText}</p>
+    </Layout>
+  )
+}
+
+/*const PreviewPage = ({ isPreview }) => {
   if (isPreview === false) return 'Not a preview!'
   return (
       <p>Vorschau wird geladen ...</p>
   )
-}
+}*/
 
 export default (props) => {
   const data = useStaticQuery(graphql`
@@ -27,3 +37,8 @@ export default (props) => {
     linkResolver: () => (doc) => linkResolver(doc),
   })(props)
 }
+
+/*export default withPreviewResolver(PreviewPage, {
+  repositoryName: 'spaeth',
+  linkResolver,
+})*/
