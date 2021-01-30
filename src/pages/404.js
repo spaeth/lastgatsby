@@ -22,8 +22,10 @@ const Page404 = () => (
 export default withUnpublishedPreview(Page404, {
   templateMap: {
     post: Post,
+    homepage: Homepage,
     page: Page,
     prismicPost: Post,
     prismicPage: Page,
+    prismicHomepage: Homepage,
   },
 })

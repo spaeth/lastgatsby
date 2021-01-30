@@ -9,7 +9,7 @@ const Header = ({ isHomepage, navigation }) => {
 
   return (
     <header className={`site-header ${homepageClass}`}>
-
+    <script async defer src="https://static.cdn.prismic.io/prismic.js?new=true&repo=spaeth"></script>
       <Link to="/">
         <div className="logo">Example Site von Thomas</div>
       </Link>
