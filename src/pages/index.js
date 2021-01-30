@@ -39,6 +39,7 @@ const Homepage = ({ data }) => {
 
   return (
     <Layout isHomepage navigation={prismicNavigation}>
+        <script async defer src="https://static.cdn.prismic.io/prismic.js?new=true&repo=spaeth"></script>
       <SEO title="Home" />
       <HomepageBanner bannerContent={bannerContent} />
       <SliceZone sliceZone={document.body} />
@@ -159,4 +160,4 @@ export const query = graphql`
   }
 `
 
-export default Homepage
+export default withPreview(Homepage)

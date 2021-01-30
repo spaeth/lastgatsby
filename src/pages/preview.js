@@ -6,8 +6,11 @@ import linkResolver from '../utils/linkResolver'
 
 const PreviewPage = ({ isPreview }) => {
   if (isPreview === false) return 'Not a preview!'
-
-  return <p>Loading</p>
+  return (
+    <Layout>
+      <p>Vorschau wird geladen ...</p>
+    </Layout>
+  )
 }
 
 export default (props) => {
