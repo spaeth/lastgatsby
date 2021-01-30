@@ -3,6 +3,7 @@ import { StaticQuery, graphql } from 'gatsby'
 import { Helmet } from 'react-helmet'
 import Footer from './Footer'
 import '../../stylesheets/main.scss'
+import Header from './Header'
 
 export default (props) => (
   <StaticQuery
@@ -21,7 +22,7 @@ export default (props) => (
   />
 )
 
-const Layout = ({ data, children }) => {
+const Layout = ({ data, children, navigation }) => {
   // Define the meta title and description
   const { title, description } = data.site.siteMetadata
 
@@ -29,9 +30,9 @@ const Layout = ({ data, children }) => {
     <>
       <Helmet htmlAttributes={{ lang: 'de' }}>
         <meta charSet="utf-8" />
-        <title>{title}</title>
         <meta name="description" content={description} />
       </Helmet>
+      <Header navigation={navigation} />
       <main>{children}</main>
       <Footer />
     </>

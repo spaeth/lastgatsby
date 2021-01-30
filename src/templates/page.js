@@ -1,78 +1,36 @@
 import React from 'react'
 import { graphql } from 'gatsby'
-import { RichText } from 'prismic-reactjs'
-import { withPreview } from 'gatsby-source-prismic'
 import Layout from '../components/layouts'
 import SEO from '../components/SEO'
-
-import BlogPosts from '../components/BlogPosts'
-import Img from 'gatsby-image';
 import SliceZone from '../components/SliceZone'
-import HomepageBanner from '../components/HomepageBanner'
-import MainContent from '../components/MainContent'
+import { withPreview } from 'gatsby-source-prismic'
 
-// Using the queried Blog Home document data, we render the top section
-const BlogHomeHead = ({ home }) => {
-  const avatar = { backgroundImage: `url(${home.image.url})` }
-  return (
-    <div className="home-header container" data-wio-id={home.id}>
-      <div className="blog-avatar" style={avatar} />
-      <h1>{RichText.asText(home.headline)}</h1>
-      <p className="blog-description">{RichText.asText(home.description)}</p>
-    </div>
-  )
-}
-
-const Homepage = ({ data }) => {
+const Page = ({ data }) => {
   if (!data) return null
-  const document = data.allPrismicHomepage.edges[0].node.data
-
-  const bannerContent = {
-    title: document.banner_title,
-    description: document.banner_description,
-    link: document.banner_link,
-    linkLabel: document.banner_link_label,
-    background: document.banner_background,
-  }
-
+  const document = data.allPrismicPage.edges[0].node
   const prismicNavigation = data.prismicNavigation
 
+  const capitalizeFirstLetter = (input) => {
+    return input[0].toUpperCase() + input.slice(1)
+  }
+
   return (
-    <Layout isHomepage navigation={prismicNavigation}>
-      <SEO title="Home" />
-      <HomepageBanner bannerContent={bannerContent} />
-      <SliceZone sliceZone={document.body} />
+    <Layout navigation={prismicNavigation}>
+      <SEO title={capitalizeFirstLetter(document.uid)} />
+      <SliceZone sliceZone={document.data.body} />
     </Layout>
   )
 }
 
 export const query = graphql`
-  query Homepage {
-    allPrismicHomepage {
+  query PageQuery($uid: String) {
+    allPrismicPage(filter: { uid: { eq: $uid } }) {
       edges {
         node {
+          uid
           data {
-            banner_title {
-              raw
-            }
-            banner_description {
-              raw
-            }
-            banner_link {
-              url
-              type
-              uid
-            }
-            banner_link_label {
-              raw
-            }
-            banner_background {
-              url
-              thumbnails
-              alt
-            }
             body {
-              ... on PrismicHomepageBodyText {
+              ... on PrismicPageBodyText {
                 slice_type
                 primary {
                   columns
@@ -81,7 +39,7 @@ export const query = graphql`
                   }
                 }
               }
-              ... on PrismicHomepageBodyQuote {
+              ... on PrismicPageBodyQuote {
                 slice_type
                 primary {
                   quote {
@@ -89,7 +47,7 @@ export const query = graphql`
                   }
                 }
               }
-              ... on PrismicHomepageBodyFullWidthImage {
+              ... on PrismicPageBodyFullWidthImage {
                 slice_type
                 primary {
                   full_width_image {
@@ -98,7 +56,7 @@ export const query = graphql`
                   }
                 }
               }
-              ... on PrismicHomepageBodyImageGallery {
+              ... on PrismicPageBodyImageGallery {
                 slice_type
                 primary {
                   gallery_title {
@@ -124,7 +82,7 @@ export const query = graphql`
                   }
                 }
               }
-              ... on PrismicHomepageBodyImageHighlight {
+              ... on PrismicPageBodyImageHighlight {
                 slice_type
                 primary {
                   featured_image {
@@ -153,10 +111,10 @@ export const query = graphql`
         }
       }
     }
-    prismicNavigation {
+        prismicNavigation {
       ...HeaderQuery
     }
   }
 `
 
-export default Homepage
+export default withPreview(Page)

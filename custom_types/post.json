@@ -1,104 +1,85 @@
 {
-  "Blog Post": {
-    "uid": {
-      "type": "UID",
-      "config": {
-        "label": "UID",
-        "placeholder": "unique-identifier-for-blog-post-url"
+  "Blog Post" : {
+    "uid" : {
+      "type" : "UID",
+      "config" : {
+        "label" : "UID",
+        "placeholder" : "unique-identifier-for-blog-post-url"
       }
     },
-    "title": {
-      "type": "StructuredText",
-      "config": {
-        "single": "heading1",
-        "label": "Title",
-        "placeholder": "Blog Post Title..."
+    "title" : {
+      "type" : "StructuredText",
+      "config" : {
+        "single" : "heading1",
+        "label" : "Title",
+        "placeholder" : "Blog Post Title..."
       }
     },
-    "date": {
-      "type": "Date",
-      "config": {
-        "label": "Date"
+    "date" : {
+      "type" : "Date",
+      "config" : {
+        "label" : "Date"
       }
     },
-    "body": {
-      "type": "Slices",
-      "fieldset": "Slice zone",
-      "config": {
-        "labels": {
-          "image_with_caption": [
-            {
-              "name": "emphasized",
-              "display": "Emphasized"
-            },
-            {
-              "name": "image-full-width",
-              "display": "Full"
-            }
-          ]
+    "body" : {
+      "type" : "Slices",
+      "fieldset" : "Slice zone",
+      "config" : {
+        "labels" : {
+          "image_with_caption" : [ {
+            "name" : "emphasized",
+            "display" : "Emphasized"
+          }, {
+            "name" : "image-full-width",
+            "display" : "Full"
+          } ]
         },
-        "choices": {
-          "text": {
-            "type": "Slice",
-            "fieldset": "Text",
-            "description": "A rich text section",
-            "icon": "text_fields",
-            "non-repeat": {
-              "text": {
-                "type": "StructuredText",
-                "config": {
-                  "multi": "paragraph, preformatted, heading2, heading3, strong, em, hyperlink, embed, list-item, o-list-item, o-list-item",
-                  "allowTargetBlank": true,
-                  "label": "Text",
-                  "placeholder": "Post text..."
-                }
-              }
-            },
-            "repeat": {}
-          },
-          "quote": {
-            "type": "Slice",
-            "fieldset": "Quote",
-            "description": "A quote section",
-            "icon": "format_quote",
-            "non-repeat": {
-              "quote": {
-                "type": "StructuredText",
-                "config": {
-                  "single": "paragraph",
-                  "label": "Quote",
-                  "placeholder": "Post Quote..."
-                }
-              }
-            },
-            "repeat": {}
-          },
-          "image_with_caption": {
-            "type": "Slice",
-            "fieldset": "Image with Caption",
-            "description": "An image with an optional caption",
-            "icon": "image",
-            "non-repeat": {
-              "image": {
-                "type": "Image",
-                "config": {
-                  "constraint": {
-                    "width": 1200
-                  },
-                  "thumbnails": [],
-                  "label": "Image"
+        "choices" : {
+          "text" : {
+            "type" : "Slice",
+            "fieldset" : "Text",
+            "description" : "Rich Text section with option for 1 or 2 columns",
+            "icon" : "text_fields",
+            "display" : "list",
+            "non-repeat" : {
+              "columns" : {
+                "type" : "Select",
+                "config" : {
+                  "options" : [ "1 Column", "2 Columns" ],
+                  "label" : "columns"
                 }
               },
-              "caption": {
-                "type": "StructuredText",
-                "config": {
-                  "single": "heading3",
-                  "label": "Caption",
-                  "placeholder": "Image Caption..."
+              "content" : {
+                "type" : "StructuredText",
+                "config" : {
+                  "multi" : "paragraph, heading1, heading2, heading3, strong, em, hyperlink",
+                  "allowTargetBlank" : true,
+                  "label" : "content"
                 }
               }
             },
-            "repeat": {}
+            "repeat" : { }
+          },
+          "full_width_image" : {
+            "type" : "Slice",
+            "fieldset" : "Full Width Image",
+            "description" : "A wide, thin image",
+            "icon" : "broken_image",
+            "display" : "list",
+            "non-repeat" : {
+              "full_width_image" : {
+                "type" : "Image",
+                "config" : {
+                  "constraint" : {
+                    "width" : 980,
+                    "height" : 300
+                  },
+                  "thumbnails" : [ ],
+                  "label" : "full_width_image"
+                }
+              }
+            },
+            "repeat" : { }
           }
         }
       }

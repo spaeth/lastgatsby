@@ -1,8 +1,10 @@
 import React from 'react'
 import { RichText } from 'prismic-reactjs'
 
-export default ({ slice }) => (
-  <div className="post-quote container">
+const Quote = ({ slice }) => (
+  <section className="content-section quote">
     <blockquote>{RichText.asText(slice.primary.quote.raw)}</blockquote>
-  </div>
+  </section>
 )
+
+export default Quote

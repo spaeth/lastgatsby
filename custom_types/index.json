@@ -5,10 +5,22 @@
     "repeatable": false,
     "value": "bloghome.json"
   },
+    {
+    "id": "homepage",
+    "name": "Homepage",
+    "repeatable": false,
+    "value": "homepage.json"
+  },
   {
     "id": "post",
     "name": "Post",
     "repeatable": true,
     "value": "post.json"
+  },
+    {
+    "id": "page",
+    "name": "Page",
+    "repeatable": true,
+    "value": "page.json"
   }
 ]

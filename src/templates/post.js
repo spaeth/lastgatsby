@@ -4,122 +4,58 @@ import { RichText } from 'prismic-reactjs'
 import { withPreview } from 'gatsby-source-prismic'
 import Layout from '../components/layouts'
 import { ImageCaption, Quote, Text } from '../components/slices'
+import SliceZone from '../components/SliceZone';
+import SEO from "../components/SEO";
 
 // Query for the Blog Post content in Prismic
 export const query = graphql`
-  query BlogPostQuery($uid: String) {
-    prismicPost(uid: { eq: $uid }) {
-      id
-      uid
-      lang
-      type
-      url
-      data {
-        date
-        title {
-          raw
-        }
-        body {
-          ... on PrismicPostBodyText {
-            slice_label
-            slice_type
-            primary {
-              text {
-                raw
+  query PostQuery($uid: String) {
+    allPrismicPost(filter: { uid: { eq: $uid } }) {
+      edges {
+        node {
+          uid
+          data {
+            body {
+              ... on PrismicPostBodyText {
+                slice_type
+                primary {
+                  columns
+                  content {
+                    raw
+                  }
+                }
               }
-            }
-          }
-          ... on PrismicPostBodyQuote {
-            slice_label
-            slice_type
-            primary {
-              quote {
-                raw
-              }
-            }
-          }
-          ... on PrismicPostBodyImageWithCaption {
-            id
-            slice_label
-            slice_type
-            primary {
-              image {
-                alt
-                url
-              }
-              caption {
-                raw
+              ... on PrismicPostBodyFullWidthImage {
+                slice_type
+                primary {
+                  full_width_image {
+                    url
+                    thumbnails
+                  }
+                }
               }
             }
           }
         }
       }
     }
+        prismicNavigation {
+      ...HeaderQuery
+    }
   }
 `
 
-// Sort and display the different slice options
-const PostSlices = ({ slices }) =>
-  slices.map((slice, index) => {
-    const res = (() => {
-      switch (slice.slice_type) {
-        case 'text':
-          return (
-            <div key={index} className="homepage-slice-wrapper">
-              <Text slice={slice} />
-            </div>
-          )
-
-        case 'quote':
-          return (
-            <div key={index} className="homepage-slice-wrapper">
-              <Quote slice={slice} />
-            </div>
-          )
-
-        case 'image_with_caption':
-          return (
-            <div key={index} className="homepage-slice-wrapper">
-              <ImageCaption slice={slice} />
-            </div>
-          )
-
-        default:
-      }
-    })()
-    return res
-  })
-
-// Display the title, date, and content of the Post
-const PostBody = ({ blogPost }) => {
-  return (
-    <div>
-      <div className="container post-header">
-        <div className="back">
-          <Link to="/">back to list</Link>
-        </div>
-        <h1>
-          {RichText.asText(blogPost.title.raw).length !== 0
-            ? RichText.asText(blogPost.title.raw)
-            : 'Untitled'}
-        </h1>
-      </div>
-      {/* Go through the slices of the post and render the appropiate one */}
-      <PostSlices slices={blogPost.body} />
-    </div>
-  )
-}
-
-export const Post = ({ data }) => {
+const Post = ({ data }) => {
   if (!data) return null
-  // Define the Post content returned from Prismic
-  const post = data.prismicPost.data
+  //const post = data.prismicPost.data
+    const document = data.allPrismicPost.edges[0].node
+  //const document = data.allPrismicPage.edges[0].node
+  const prismicNavigation = data.prismicNavigation
 
   return (
-    <Layout>
-      <PostBody blogPost={post} />
+    <Layout navigation={prismicNavigation}>
+      <SliceZone sliceZone={document.data.body} />
     </Layout>
   )
 }
-
 export default withPreview(Post)
