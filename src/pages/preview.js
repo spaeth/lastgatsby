@@ -9,6 +9,7 @@ const PreviewPage = ({ isPreview, isLoading }) => {
   const previewText = isPreview ? 'Loading' : 'Not a preview!'
   return (
     <Layout>
+      <script async defer src="https://static.cdn.prismic.io/prismic.js?new=true&repo=spaeth"></script>
       <p>{previewText}</p>
     </Layout>
   )
