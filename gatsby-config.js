@@ -3,7 +3,9 @@ const {
   releaseID,
   accessToken,
 } = require('./prismic-configuration')
+
 const linkResolver = require('./src/utils/linkResolver')
+
 
 const reponame = process.env.PRISMIC_REPO_NAME || prismicRepo
 const apiKey = process.env.PRISMIC_API_KEY || accessToken
@@ -36,9 +38,9 @@ const gastbySourcePrismicConfig = {
 
 module.exports = {
   siteMetadata: {
-    title: 'Gatsby Prismic Blog',
-    description: 'Blog example for Gatsby & Prismic',
-    author: '@levimykel',
+    title: 'Kanzlei Späth, Steuerberater für Unternehmen und Unternehmer in Bogen',
+    description: 'digitaler Steuerberater',
+    author: '@Dr. Thomas Späth',
   },
   plugins: [
     gastbySourcePrismicConfig,
