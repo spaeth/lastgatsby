@@ -25,7 +25,6 @@ const gastbySourcePrismicConfig = {
     accessToken: apiKey,
     releaseID: prismicReleaseID,
     prismicToolbar: true,
-    previewPath: '/preview',
     linkResolver: () => (doc) => linkResolver(doc),
     schemas: {
       blogHome: blogHomeSchema,
